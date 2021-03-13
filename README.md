@@ -3,6 +3,8 @@ Tested on Nextion Basic Display NX4827T043 https://nextion.tech/datasheets/nx482
 
 Nextion library & config: https://github.com/itead/ITEADLIB_Arduino_Nextion
 
+# Config
+
 In order to use the library update the following lines in `Arduino/libraries/ITEADLIB_Arduino_Nextion-0.7.0/NexConfig.h`
 
 ```{c}
@@ -14,6 +16,7 @@ In order to use the library update the following lines in `Arduino/libraries/ITE
 #define nexSerial Serial
 ...
 ```
+# Credentials
 
 The following constants : 
 - `WIFI_SSID`
