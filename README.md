@@ -1,4 +1,4 @@
-# OW2Nextion
+# Intro (In progress)
 Tested on Nextion Basic Display NX4827T043 https://nextion.tech/datasheets/nx4827t043/
 
 Nextion library & config: https://github.com/itead/ITEADLIB_Arduino_Nextion
