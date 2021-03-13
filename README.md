@@ -32,4 +32,4 @@ Are located in `Arduino/libraries/myConfig.h` define your own credentials there 
 - When uploading the arduino code to the microcontroller disconnect all the wires (RX,TX), remaining only plugged the microUSB cable.
 - Its safer to upload the .HMI files to the display using a USB-to-TTL interface than using the microSD because of the poor quality of the  nextion microSD slot. The uploading process using the microSD requires multiple insertions for each update thus increasing the possibility of damaging the slot. 
 
-- For the following exception `[Errno 13] pemission denied: '/dev/ttyUSB0' does not exist or your board is not connected` run `sudo chmod a+rw /dev/ttyUSB0`
+- For the following Arduino IDE exception `[Errno 13] pemission denied: '/dev/ttyUSB0' does not exist or your board is not connected` run `sudo chmod a+rw /dev/ttyUSB0`
