@@ -13,6 +13,6 @@ In order to use the library update the following lines in `Arduino/libraries/ITE
 ...
 #define nexSerial Serial
 ```
-
+...
 
 
