@@ -17,6 +17,10 @@
 #define ICON13D 8
 #define ICON50D 9
 
+#define ICON1N 10
+#define ICON2N 11
+#define ICON10N 12
+
 // Web client
 HTTPClient HTTPclient;
 
@@ -160,18 +164,24 @@ void run() {
       const char* icon = doc["weather"][0]["icon"];
 
       // Icon  assingment 
-      if (strcmp(icon, "01d") == 0 || strcmp(icon, "01n") == 0) {
+      if (strcmp(icon, "01d") == 0){
         nexIcon.setPic(ICON1D);
-      } else if (strcmp(icon, "02d") == 0 || strcmp(icon, "02n") == 0) {
+      } else if (strcmp(icon, "01n") == 0) {
+        nexIcon.setPic(ICON1N);
+      } else if (strcmp(icon, "02d") == 0) {
         nexIcon.setPic(ICON2D);
+      } else if (strcmp(icon, "02n") == 0) {
+        nexIcon.setPic(ICON2N);
       } else if (strcmp(icon, "03d") == 0 || strcmp(icon, "03n") == 0) {
         nexIcon.setPic(ICON3D);
       } else if (strcmp(icon, "04d") == 0 || strcmp(icon, "04n") == 0) {
         nexIcon.setPic(ICON4D);
       } else if (strcmp(icon, "09d") == 0 || strcmp(icon, "09n") == 0) {
         nexIcon.setPic(ICON9D);
-      } else if (strcmp(icon, "10d") == 0 || strcmp(icon, "10n") == 0) {
+      } else if (strcmp(icon, "10d") == 0) {
         nexIcon.setPic(ICON10D);
+      } else if (strcmp(icon, "10n") == 0) {
+        nexIcon.setPic(ICON10N);    
       } else if (strcmp(icon, "11d") == 0 || strcmp(icon, "11n") == 0) {
         nexIcon.setPic(ICON11D);
       } else if (strcmp(icon, "13d") == 0 || strcmp(icon, "13n") == 0) {
