@@ -21,12 +21,22 @@ In order to use the library update the following lines in `Arduino/libraries/ITE
 # Credentials
 
 The following constants : 
+
+```{C}
+#define WIFI_SSID "WIFI_SSID"
+#define WIFI_PASSWORD "WIFI_PASSWORD"
+
+#define MQTT_USER "MQTT_USER"
+#define MQTT_PASS "MQTT_PASS"
+
+#define OpenWeatherAPIKEY "APIKEY"
+```
 - `WIFI_SSID`
 - `WIFI_PASSWORD`
 - `MQTT_USER`
 - `MQTT_PASS`
 
-Are located in `Arduino/libraries/myConfig.h` define your own credentials there ;)
+Are located in `Arduino/libraries/myConfig/myConfig.h` define your own credentials there ;)
 
 # Usefull tips 
 - When uploading the `OW2nextion.ino` to the microcontroller disconnect all the nextion display wires (RX,TX), so that only  the microUSB cable remains connected.
