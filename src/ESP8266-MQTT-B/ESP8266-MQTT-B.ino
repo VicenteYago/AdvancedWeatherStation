@@ -12,8 +12,7 @@
 #include <WiFiUdp.h>
 #include <myConfig.h>
 
-#define MQTT_HOST IPAddress(192, 168, 12, 103)
-#define MQTT_PORT 1883
+#define MQTT_HOST IPAddress(MQTT_HOST_1, MQTT_HOST_2, MQTT_HOST_3, MQTT_HOST_4)
 
 #define SEALEVELPRESSURE_HPA (1013.25)
 
