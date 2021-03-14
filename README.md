@@ -31,11 +31,6 @@ The following constants :
 
 #define OpenWeatherAPIKEY "APIKEY"
 ```
-- `WIFI_SSID`
-- `WIFI_PASSWORD`
-- `MQTT_USER`
-- `MQTT_PASS`
-
 Are located in `Arduino/libraries/myConfig/myConfig.h` define your own credentials there ;)
 
 # Usefull tips 
