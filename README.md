@@ -28,6 +28,12 @@ The following constants :
 
 #define MQTT_USER "MQTT_USER"
 #define MQTT_PASS "MQTT_PASS"
+#define MQTT_HOST_1 192
+#define MQTT_HOST_2 168
+#define MQTT_HOST_3 12
+#define MQTT_HOST_4 103
+#define MQTT_HOST_ "192.168.12.103"
+#define MQTT_PORT 1883
 
 #define OpenWeatherAPIKEY "APIKEY"
 ```
