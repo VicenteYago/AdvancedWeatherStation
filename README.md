@@ -20,7 +20,7 @@ In order to use the library update the following lines in `Arduino/libraries/ITE
 ```
 # Credentials
 
-The following constants : 
+The following constants are located in `Arduino/libraries/myConfig/myConfig.h` ;)
 
 ```{C}
 #define WIFI_SSID "WIFI_SSID"
@@ -37,7 +37,6 @@ The following constants :
 
 #define OpenWeatherAPIKEY "APIKEY"
 ```
-Are located in `Arduino/libraries/myConfig/myConfig.h` define your own credentials there ;)
 
 # Usefull tips 
 - When uploading the `OW2nextion.ino` to the microcontroller disconnect all the nextion display wires (RX,TX), so that only  the microUSB cable remains connected. Once finished reconnect then and reset the board to begin the comunication with the  display. 
