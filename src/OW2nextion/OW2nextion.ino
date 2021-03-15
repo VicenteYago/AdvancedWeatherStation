@@ -4,6 +4,7 @@
 #include <ESP8266HTTPClient.h>
 #include "Nextion.h"
 #include <ArduinoJson.h>
+#include <PubSubClient.h>
 #include <myConfig.h>
 
 // Nextion display constants
@@ -21,12 +22,17 @@
 #define ICON2N 11
 #define ICON10N 12
 
+#define STR_BUFF_SIZE 7
+
 // Web client
 HTTPClient HTTPclient;
+WiFiClient espClient;
+PubSubClient mqttClient(espClient);
+
 
 // OpenWeatherMap Data
-String hostOpenWeatherMap = "http://api.openweathermap.org/data/2.5/weather";
-String cityID = "2509402"; 
+char* hostOpenWeatherMap = "http://api.openweathermap.org/data/2.5/weather";
+char* cityID = "2509402"; 
 
 // Nextion Display Fields
 // NexText(PageID, ComponentID, ComponentName)
@@ -36,17 +42,26 @@ NexText nexWind = NexText(0, 4, "t2");
 NexText nexTempMin = NexText(0, 5, "t3");
 NexText nexTempMax = NexText(0, 6, "t4");
 NexText nexCity = NexText(0, 2, "t0");
-
 NexCrop nexIcon = NexCrop(0, 13, "q0");
 
-NexText nexTempExt1 = NexText(0, 11, "t8");
-NexText nexTempExt2 = NexText(0, 12, "t9");
-NexText nexNameTempExt1 = NexText(0, 9, "t6");
-NexText nexNameTempExt2 = NexText(0, 13, "t7");
+NexText nexTempInt = NexText(0, 11, "t8");
+NexText nexTempExt = NexText(0, 12, "t9");
+//NexText nexNameTempInt = NexText(0, 9, "t6");
+//NexText nexNameTempExt = NexText(0, 13, "t7");
 
 // timer
 unsigned long lastQuery = 0;
 unsigned long queryTime = 5000; // Time in miliseconds
+
+//MQTT
+char* topicInt = "esp8266_A/bme280/values";
+char* topicExt = "esp8266_B/bme280/values";
+
+
+char tempExt[STR_BUFF_SIZE];
+char tempInt[STR_BUFF_SIZE];
+char humExt[STR_BUFF_SIZE];
+char humInt[STR_BUFF_SIZE];
 
 void configWifi() {
 #ifdef _DEBUG_
@@ -71,11 +86,12 @@ void configWifi() {
 }
 
 void run() {
-  String url = hostOpenWeatherMap;
-  url += "?id=";
-  url += cityID;
-  url += "&appid=";
-  url += OpenWeatherAPIKEY;
+  char url[200];
+  strcpy(url, hostOpenWeatherMap);
+  strcat(url, "?id=");
+  strcat(url, cityID);
+  strcat(url, "&appid="); 
+  strcat(url, OpenWeatherAPIKEY); 
 
 #ifdef _DEBUG_
   Serial.print("HTTP request: ");
@@ -124,42 +140,43 @@ void run() {
       // Temperature
       float tempF = doc["main"]["temp"];
       tempF = tempF - 273.15; // to Celsius
-      char temp[7];
-      snprintf(temp, 7, "%.0f C", tempF);
+      char temperature[STR_BUFF_SIZE];
+      snprintf(temperature, STR_BUFF_SIZE, "%.0f C", tempF);
 
       // humidity
-      String humidityS = String(int(doc["main"]["humidity"])) + "%";
       char humidity[7];
-      humidityS.toCharArray(humidity, 7);
+      snprintf(humidity, STR_BUFF_SIZE, "%d%%", (int)doc["main"]["humidity"]) ;
+
 
       // Temperature min
       float tempMinF = doc["main"]["temp_min"];
       tempMinF = tempMinF - 273.15; // to Celsius
       char tempMin[7];
-      snprintf(tempMin, 7, "%.0f C", tempMinF);
+      snprintf(tempMin, STR_BUFF_SIZE, "%.0f C", tempMinF);
 
       // Temperature max
       float tempMaxF = doc["main"]["temp_max"];
       tempMaxF = tempMaxF - 273.15; // to Celsius
       char tempMax[7];
-      snprintf(tempMax, 7, "%.0f C", tempMaxF);
+      snprintf(tempMax, STR_BUFF_SIZE, "%.0f C", tempMaxF);
 
       // windF
-      float windF = doc["wind"]["speed"];
-      char wind[8];
-      snprintf(wind, 8, "%.0fm/s", windF);
+      char wind[7];
+      snprintf(wind, STR_BUFF_SIZE, "%.0fm/s", (float)doc["wind"]["speed"]);
 
       // City
       const char* city = doc["name"];
       nexCity.setText(city);
       
       // Update display
-      nexTemp.setText(temp);
+      nexTemp.setText(temperature);
       nexHumidity.setText(humidity);
       nexTempMin.setText(tempMin);
       nexTempMax.setText(tempMax);
       nexWind.setText(wind);
-
+      nexTempInt.setText(tempInt);
+      nexTempExt.setText(tempExt);
+      
       // weather indicator icon 
       const char* icon = doc["weather"][0]["icon"];
 
@@ -195,7 +212,7 @@ void run() {
 #ifdef _DEBUG_
       Serial.println("OpenWeatherMap Data");
       Serial.print("Temperature: ");
-      Serial.println(temp);
+      Serial.println(temperature);
       Serial.print("humidity: ");
       Serial.println(humidity);
       Serial.print("Temp. Min: ");
@@ -228,13 +245,88 @@ void timer() {
   }
 }
 
+void readJSON(byte* payload, char *temp, char *hum) {
+  StaticJsonDocument<170> doc; 
+
+  char *payload_str = reinterpret_cast<char*>(payload);
+  Serial.print("readJSON payload_str: ");
+  Serial.println(payload_str);
+  
+  DeserializationError error = deserializeJson(doc, payload_str);
+
+  // Test if parsing succeeds.
+  if (error) {
+    Serial.print(F("deserializeJson() failed: "));
+    Serial.println(error.f_str());
+    return;
+  }
+  snprintf(temp, STR_BUFF_SIZE , "%d C", (int) doc["data"][0]["temperature"]);
+  snprintf(hum, STR_BUFF_SIZE , "%d %", (int) doc["data"][0]["humidity"]);
+  //snprintf(pres, STR_BUFF_SIZE , "%d", ret[2]);
+
+  Serial.println(temp);
+  Serial.println(hum);
+  //Serial.println(pres);
+
+  }
+
+void callback(char* topic, byte* payload, unsigned int length) {
+  Serial.print("Message recived [");
+  Serial.print(topic);
+  Serial.println("]");
+  for (int i = 0; i < length; i++) {
+    Serial.print((char)payload[i]);
+  }
+  Serial.println();
+
+  if (strcmp(topic, topicInt) == 0) {
+    memset(tempInt, 0, STR_BUFF_SIZE);
+    memset(humInt, 0, STR_BUFF_SIZE);
+    readJSON(payload, tempInt, humInt);
+    
+  } else if (strcmp(topic, topicExt) == 0){
+    memset(tempExt, 0, STR_BUFF_SIZE);
+    memset(humExt, 0, STR_BUFF_SIZE);
+    readJSON(payload, tempExt, humExt);
+  }
+  
+}
+
+
+void reconnect() {
+   // Loop until we're reconnected
+  while (!mqttClient.connected()) {
+    Serial.print("Attempting MQTT connection...");
+    // Attempt to connect
+    if (mqttClient.connect("ESP8266Client", MQTT_USER, MQTT_PASS)) {
+      Serial.println("Succesfully connected");
+      // Subscribe
+      mqttClient.subscribe("esp8266_A/bme280/values");
+      mqttClient.subscribe("esp8266_B/bme280/values");
+
+    } else {
+      Serial.print("failed, rc=");
+      Serial.print(mqttClient.state());
+      Serial.println(" try again in 5 seconds");
+      // Wait 5 seconds before retrying
+      delay(5000);
+    }
+  }
+}
+
 void setup(){
   // Initiate communication with display
   // 9600 Default Baudrate
   nexInit(); // From NextHardware.h
   configWifi();
+  mqttClient.setServer(MQTT_HOST_, MQTT_PORT);
+  mqttClient.setCallback(callback);
 }
 
 void loop() {
   timer();
+  if (!mqttClient.connected()) {
+    reconnect();
+  }
+  mqttClient.loop();
 }
