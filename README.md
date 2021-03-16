@@ -20,7 +20,7 @@ In order to use the library update the following lines in `Arduino/libraries/ITE
 ```
 # Credentials
 
-The following constants : 
+The following constants are located in `Arduino/libraries/myConfig/myConfig.h` ;)
 
 ```{C}
 #define WIFI_SSID "WIFI_SSID"
@@ -28,10 +28,15 @@ The following constants :
 
 #define MQTT_USER "MQTT_USER"
 #define MQTT_PASS "MQTT_PASS"
+#define MQTT_HOST_1 192
+#define MQTT_HOST_2 168
+#define MQTT_HOST_3 12
+#define MQTT_HOST_4 103
+#define MQTT_HOST_ "192.168.12.103"
+#define MQTT_PORT 1883
 
 #define OpenWeatherAPIKEY "APIKEY"
 ```
-Are located in `Arduino/libraries/myConfig/myConfig.h` define your own credentials there ;)
 
 # Usefull tips 
 - When uploading the `OW2nextion.ino` to the microcontroller disconnect all the nextion display wires (RX,TX), so that only  the microUSB cable remains connected. Once finished reconnect then and reset the board to begin the comunication with the  display. 
@@ -41,3 +46,4 @@ Are located in `Arduino/libraries/myConfig/myConfig.h` define your own credentia
 - Save your money and stuck with an basic nextion display unless you really need the bigger sizes (> 7.0"), in that case go for the 'intelligent hmi display' series. Most of the premium 'intelligent display' capabilites  like transparent images can be handled with tricks like cropped images.
 
 - For the following Arduino IDE exception `[Errno 13] pemission denied: '/dev/ttyUSB0' does not exist or your board is not connected` run `sudo chmod a+rw /dev/ttyUSB0`
+- Nextion libraries are unmantained and full of bugs, afortunately a skilled maker called Ray Livingston provided an excellent job fixing the code while maintaining the original structure. His work and documentation can be found in [Arduino forums](https://forum.arduino.cc/index.php?topic=620821.0). Additionally [Perry Pebbington](https://forum.arduino.cc/index.php?topic=604185.msg4100443#msg4100443) and [Seithan](https://github.com/Seithan/EasyNextionLibrary) also offer solutions to the original nextion libraries. As I have used Ray ones I have included them in the curatedLibs folder, just copy them to the nextion originals folder.  
