@@ -27,14 +27,12 @@
 
 #define STR_BUFF_SIZE 7
 
-EasyNex myNex(Serial1);
+EasyNex myNex(Serial);
 
 // Web client
 HTTPClient HTTPclient;
 WiFiClient espClient;
 PubSubClient mqttClient(espClient);
-
-#include "EasyNextionLibrary.h" 
 
 
 // OpenWeatherMap Data
@@ -199,8 +197,16 @@ void run() {
       sprintf(localt,"%d:%d", timeClient.getHours(), timeClient.getMinutes());
 
       // Update display
-
-     myNex.writeStr("t5.txt", "ON"); 
+     myNex.writeStr("page page0");
+     myNex.writeStr("t5.txt", temperature); 
+     myNex.writeStr("t1.txt", humidity);  
+     myNex.writeStr("t3.txt", tempMin);
+     myNex.writeStr("t4.txt", tempMax);
+     myNex.writeStr("t2.txt", wind);
+     myNex.writeStr("t8.txt", tempInt); 
+     myNex.writeStr("t11.txt", tempExt); 
+     myNex.writeStr("t10.txt", day); 
+     myNex.writeStr("t9.txt", localt); 
  /*     
       nexTemp.setText(temperature);
       nexHumidity.setText(humidity);
@@ -352,8 +358,8 @@ void reconnect() {
 void setup(){
   // Initiate communication with display
   // 9600 Default Baudrate
+  Serial.begin(9600);
   myNex.begin(9600); 
- #include "EasyNextionLibrary.h" 
   configWifi();
   timeClient.begin();
   mqttClient.setServer(MQTT_HOST_, MQTT_PORT);
