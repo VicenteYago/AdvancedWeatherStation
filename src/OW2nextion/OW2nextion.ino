@@ -2,10 +2,13 @@
 
 #include "ESP8266WiFi.h"
 #include <ESP8266HTTPClient.h>
-#include "Nextion.h"
+//#include "Nextion.h"
 #include <ArduinoJson.h>
 #include <PubSubClient.h>
 #include <myConfig.h>
+#include <NTPClient.h>
+#include <WiFiUdp.h>
+#include "time.h"
 
 // Nextion display constants
 #define ICON1D 1
@@ -31,8 +34,8 @@ PubSubClient mqttClient(espClient);
 
 
 // OpenWeatherMap Data
-char* hostOpenWeatherMap = "http://api.openweathermap.org/data/2.5/weather";
-char* cityID = "2509402"; 
+const char* hostOpenWeatherMap = "http://api.openweathermap.org/data/2.5/weather";
+const char* cityID = "2509402"; 
 
 // Nextion Display Fields
 // NexText(PageID, ComponentID, ComponentName)
@@ -49,13 +52,24 @@ NexText nexTempExt = NexText(0, 12, "t9");
 //NexText nexNameTempInt = NexText(0, 9, "t6");
 //NexText nexNameTempExt = NexText(0, 13, "t7");
 
+NexText nexDay = NexText(0, 10, "t10");
+NexText nexTime = NexText(0, 14, "t11");
+
 // timer
 unsigned long lastQuery = 0;
 unsigned long queryTime = 5000; // Time in miliseconds
 
+// Define NTP Client to get time
+const char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+const long utcOffsetInSeconds = 3600;
+WiFiUDP ntpUDP;
+NTPClient timeClient(ntpUDP, "pool.ntp.org", utcOffsetInSeconds);
+
+
+
 //MQTT
-char* topicInt = "esp8266_A/bme280/values";
-char* topicExt = "esp8266_B/bme280/values";
+const char* topicInt = "esp8266_A/bme280/values";
+const char* topicExt = "esp8266_B/bme280/values";
 
 
 char tempExt[STR_BUFF_SIZE];
@@ -167,8 +181,16 @@ void run() {
       // City
       const char* city = doc["name"];
       nexCity.setText(city);
-      
+
+      char localt[STR_BUFF_SIZE];
+      const char* day = daysOfTheWeek[timeClient.getDay()];
+      Serial.println(timeClient.getHours());
+      Serial.println(timeClient.getMinutes());
+
+      sprintf(localt,"%d:%d", timeClient.getHours(), timeClient.getMinutes());
+
       // Update display
+      
       nexTemp.setText(temperature);
       nexHumidity.setText(humidity);
       nexTempMin.setText(tempMin);
@@ -176,7 +198,9 @@ void run() {
       nexWind.setText(wind);
       nexTempInt.setText(tempInt);
       nexTempExt.setText(tempExt);
-      
+      nexDay.setText(day);
+      nexTime.setText(localt);
+
       // weather indicator icon 
       const char* icon = doc["weather"][0]["icon"];
 
@@ -242,7 +266,7 @@ void timer() {
   if ((millis() - lastQuery) > queryTime) {
     lastQuery = millis();
     run();
-  }
+   }
 }
 
 void readJSON(byte* payload, char *temp, char *hum) {
@@ -319,14 +343,17 @@ void setup(){
   // 9600 Default Baudrate
   nexInit(); // From NextHardware.h
   configWifi();
+  timeClient.begin();
   mqttClient.setServer(MQTT_HOST_, MQTT_PORT);
   mqttClient.setCallback(callback);
 }
 
 void loop() {
+  timeClient.update();
   timer();
   if (!mqttClient.connected()) {
     reconnect();
   }
   mqttClient.loop();
+  timeClient.update();
 }
