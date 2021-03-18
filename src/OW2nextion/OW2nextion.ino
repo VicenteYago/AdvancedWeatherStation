@@ -2,7 +2,7 @@
 
 #include "ESP8266WiFi.h"
 #include <ESP8266HTTPClient.h>
-//#include "Nextion.h"
+#include "EasyNextionLibrary.h"
 #include <ArduinoJson.h>
 #include <PubSubClient.h>
 #include <myConfig.h>
@@ -27,18 +27,25 @@
 
 #define STR_BUFF_SIZE 7
 
+EasyNex myNex(Serial1);
+
 // Web client
 HTTPClient HTTPclient;
 WiFiClient espClient;
 PubSubClient mqttClient(espClient);
+
+#include "EasyNextionLibrary.h" 
 
 
 // OpenWeatherMap Data
 const char* hostOpenWeatherMap = "http://api.openweathermap.org/data/2.5/weather";
 const char* cityID = "2509402"; 
 
+
+
 // Nextion Display Fields
 // NexText(PageID, ComponentID, ComponentName)
+/*
 NexText nexTemp = NexText(0, 7, "t5");
 NexText nexHumidity = NexText(0, 3, "t1");
 NexText nexWind = NexText(0, 4, "t2");
@@ -54,6 +61,8 @@ NexText nexTempExt = NexText(0, 12, "t9");
 
 NexText nexDay = NexText(0, 10, "t10");
 NexText nexTime = NexText(0, 14, "t11");
+*/
+
 
 // timer
 unsigned long lastQuery = 0;
@@ -180,7 +189,7 @@ void run() {
 
       // City
       const char* city = doc["name"];
-      nexCity.setText(city);
+ //     nexCity.setText(city);
 
       char localt[STR_BUFF_SIZE];
       const char* day = daysOfTheWeek[timeClient.getDay()];
@@ -190,7 +199,9 @@ void run() {
       sprintf(localt,"%d:%d", timeClient.getHours(), timeClient.getMinutes());
 
       // Update display
-      
+
+     myNex.writeStr("t5.txt", "ON"); 
+ /*     
       nexTemp.setText(temperature);
       nexHumidity.setText(humidity);
       nexTempMin.setText(tempMin);
@@ -200,37 +211,37 @@ void run() {
       nexTempExt.setText(tempExt);
       nexDay.setText(day);
       nexTime.setText(localt);
-
+*/
       // weather indicator icon 
       const char* icon = doc["weather"][0]["icon"];
 
       // Icon  assingment 
       if (strcmp(icon, "01d") == 0){
-        nexIcon.setPic(ICON1D);
+//        nexIcon.setPic(ICON1D);
       } else if (strcmp(icon, "01n") == 0) {
-        nexIcon.setPic(ICON1N);
+//        nexIcon.setPic(ICON1N);
       } else if (strcmp(icon, "02d") == 0) {
-        nexIcon.setPic(ICON2D);
+//        nexIcon.setPic(ICON2D);
       } else if (strcmp(icon, "02n") == 0) {
-        nexIcon.setPic(ICON2N);
+//        nexIcon.setPic(ICON2N);
       } else if (strcmp(icon, "03d") == 0 || strcmp(icon, "03n") == 0) {
-        nexIcon.setPic(ICON3D);
+//        nexIcon.setPic(ICON3D);
       } else if (strcmp(icon, "04d") == 0 || strcmp(icon, "04n") == 0) {
-        nexIcon.setPic(ICON4D);
+//        nexIcon.setPic(ICON4D);
       } else if (strcmp(icon, "09d") == 0 || strcmp(icon, "09n") == 0) {
-        nexIcon.setPic(ICON9D);
+//       nexIcon.setPic(ICON9D);
       } else if (strcmp(icon, "10d") == 0) {
-        nexIcon.setPic(ICON10D);
+//        nexIcon.setPic(ICON10D);
       } else if (strcmp(icon, "10n") == 0) {
-        nexIcon.setPic(ICON10N);    
+//       nexIcon.setPic(ICON10N);    
       } else if (strcmp(icon, "11d") == 0 || strcmp(icon, "11n") == 0) {
-        nexIcon.setPic(ICON11D);
+//        nexIcon.setPic(ICON11D);
       } else if (strcmp(icon, "13d") == 0 || strcmp(icon, "13n") == 0) {
-        nexIcon.setPic(ICON13D);
+//        nexIcon.setPic(ICON13D);
       } else if (strcmp(icon, "50d") == 0 || strcmp(icon, "50n") == 0) {
-        nexIcon.setPic(ICON50D);
+//        nexIcon.setPic(ICON50D);
       } else {
-        nexIcon.setPic(ICON1D);
+//        nexIcon.setPic(ICON1D);
       }
 
 #ifdef _DEBUG_
@@ -341,7 +352,8 @@ void reconnect() {
 void setup(){
   // Initiate communication with display
   // 9600 Default Baudrate
-  nexInit(); // From NextHardware.h
+  myNex.begin(9600); 
+ #include "EasyNextionLibrary.h" 
   configWifi();
   timeClient.begin();
   mqttClient.setServer(MQTT_HOST_, MQTT_PORT);
@@ -349,6 +361,7 @@ void setup(){
 }
 
 void loop() {
+  myNex.NextionListen();
   timeClient.update();
   timer();
   if (!mqttClient.connected()) {
