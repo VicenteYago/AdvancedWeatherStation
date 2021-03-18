@@ -2,7 +2,7 @@
 
 #include "ESP8266WiFi.h"
 #include <ESP8266HTTPClient.h>
-//#include "Nextion.h"
+#include "Nextion.h"
 #include <ArduinoJson.h>
 #include <PubSubClient.h>
 #include <myConfig.h>
