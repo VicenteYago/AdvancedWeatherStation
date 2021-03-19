@@ -34,33 +34,9 @@ HTTPClient HTTPclient;
 WiFiClient espClient;
 PubSubClient mqttClient(espClient);
 
-
 // OpenWeatherMap Data
 const char* hostOpenWeatherMap = "http://api.openweathermap.org/data/2.5/weather";
 const char* cityID = "2509402"; 
-
-
-
-// Nextion Display Fields
-// NexText(PageID, ComponentID, ComponentName)
-/*
-NexText nexTemp = NexText(0, 7, "t5");
-NexText nexHumidity = NexText(0, 3, "t1");
-NexText nexWind = NexText(0, 4, "t2");
-NexText nexTempMin = NexText(0, 5, "t3");
-NexText nexTempMax = NexText(0, 6, "t4");
-NexText nexCity = NexText(0, 2, "t0");
-NexCrop nexIcon = NexCrop(0, 13, "q0");
-
-NexText nexTempInt = NexText(0, 11, "t8");
-NexText nexTempExt = NexText(0, 12, "t9");
-//NexText nexNameTempInt = NexText(0, 9, "t6");
-//NexText nexNameTempExt = NexText(0, 13, "t7");
-
-NexText nexDay = NexText(0, 10, "t10");
-NexText nexTime = NexText(0, 14, "t11");
-*/
-
 
 // timer
 unsigned long lastQuery = 0;
@@ -72,12 +48,9 @@ const long utcOffsetInSeconds = 3600;
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, "pool.ntp.org", utcOffsetInSeconds);
 
-
-
 //MQTT
 const char* topicInt = "esp8266_A/bme280/values";
 const char* topicExt = "esp8266_B/bme280/values";
-
 
 char tempExt[STR_BUFF_SIZE];
 char tempInt[STR_BUFF_SIZE];
@@ -168,7 +141,6 @@ void run() {
       char humidity[7];
       snprintf(humidity, STR_BUFF_SIZE, "%d%%", (int)doc["main"]["humidity"]) ;
 
-
       // Temperature min
       float tempMinF = doc["main"]["temp_min"];
       tempMinF = tempMinF - 273.15; // to Celsius
@@ -189,12 +161,17 @@ void run() {
       const char* city = doc["name"];
  //     nexCity.setText(city);
 
-      char localt[STR_BUFF_SIZE];
+      char hours[STR_BUFF_SIZE];
+      char mins[STR_BUFF_SIZE];
       const char* day = daysOfTheWeek[timeClient.getDay()];
       Serial.println(timeClient.getHours());
       Serial.println(timeClient.getMinutes());
 
-      sprintf(localt,"%d:%d", timeClient.getHours(), timeClient.getMinutes());
+      sprintf(hours,", %02d", timeClient.getHours());
+      sprintf(mins,":%02d", timeClient.getMinutes());
+
+      // weather main
+      const char* weather_main = doc["weather"][0]["main"];
 
       // Update display
      myNex.writeStr("page page0");
@@ -205,49 +182,43 @@ void run() {
      myNex.writeStr("t2.txt", wind);
      myNex.writeStr("t8.txt", tempInt); 
      myNex.writeStr("t11.txt", tempExt); 
-     myNex.writeStr("t10.txt", day); 
-     myNex.writeStr("t9.txt", localt); 
- /*     
-      nexTemp.setText(temperature);
-      nexHumidity.setText(humidity);
-      nexTempMin.setText(tempMin);
-      nexTempMax.setText(tempMax);
-      nexWind.setText(wind);
-      nexTempInt.setText(tempInt);
-      nexTempExt.setText(tempExt);
-      nexDay.setText(day);
-      nexTime.setText(localt);
-*/
+     myNex.writeStr("t10.txt", weather_main); 
+     
+     myNex.writeStr("t9.txt", day);
+     myNex.writeStr("t9.txt+", hours); 
+     myNex.writeStr("t9.txt+", mins);     
+
       // weather indicator icon 
       const char* icon = doc["weather"][0]["icon"];
 
+
       // Icon  assingment 
       if (strcmp(icon, "01d") == 0){
-//        nexIcon.setPic(ICON1D);
+        myNex.writeNum("q0.picc", 1);
       } else if (strcmp(icon, "01n") == 0) {
-//        nexIcon.setPic(ICON1N);
+        myNex.writeNum("q0.picc", 10);
       } else if (strcmp(icon, "02d") == 0) {
-//        nexIcon.setPic(ICON2D);
+        myNex.writeNum("q0.picc", 2);
       } else if (strcmp(icon, "02n") == 0) {
-//        nexIcon.setPic(ICON2N);
+        myNex.writeNum("q0.picc", 11);
       } else if (strcmp(icon, "03d") == 0 || strcmp(icon, "03n") == 0) {
-//        nexIcon.setPic(ICON3D);
+        myNex.writeNum("q0.picc", 3);
       } else if (strcmp(icon, "04d") == 0 || strcmp(icon, "04n") == 0) {
-//        nexIcon.setPic(ICON4D);
+        myNex.writeNum("q0.picc", 4);
       } else if (strcmp(icon, "09d") == 0 || strcmp(icon, "09n") == 0) {
-//       nexIcon.setPic(ICON9D);
+        myNex.writeNum("q0.picc", 9);
       } else if (strcmp(icon, "10d") == 0) {
-//        nexIcon.setPic(ICON10D);
+        myNex.writeNum("q0.picc", 6);
       } else if (strcmp(icon, "10n") == 0) {
-//       nexIcon.setPic(ICON10N);    
+        myNex.writeNum("q0.picc", 12);   
       } else if (strcmp(icon, "11d") == 0 || strcmp(icon, "11n") == 0) {
-//        nexIcon.setPic(ICON11D);
+        myNex.writeNum("q0.picc", 7);
       } else if (strcmp(icon, "13d") == 0 || strcmp(icon, "13n") == 0) {
-//        nexIcon.setPic(ICON13D);
+        myNex.writeNum("q0.picc", 8);
       } else if (strcmp(icon, "50d") == 0 || strcmp(icon, "50n") == 0) {
-//        nexIcon.setPic(ICON50D);
+        myNex.writeNum("q0.picc", 9);
       } else {
-//        nexIcon.setPic(ICON1D);
+        myNex.writeNum("q0.picc", 1);
       }
 
 #ifdef _DEBUG_
