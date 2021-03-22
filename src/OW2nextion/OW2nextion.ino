@@ -184,9 +184,10 @@ void run() {
      myNex.writeStr("t11.txt", tempExt); 
      myNex.writeStr("t10.txt", weather_main); 
      
-     myNex.writeStr("t9.txt", day);
-     myNex.writeStr("t9.txt+", hours); 
-     myNex.writeStr("t9.txt+", mins);     
+     myNex.writeStr("t9.txt", "DoW");
+     myNex.writeStr("t9.txt+", " hours"); 
+     myNex.writeStr("t9.txt+", " mins");
+     myNex.writeStr("t9.txt+", " dd/mm/yyyy");      
 
       // weather indicator icon 
       const char* icon = doc["weather"][0]["icon"];
