@@ -3,7 +3,6 @@
 #include "ESP8266WiFi.h"
 #include <ESP8266HTTPClient.h>
 #include "EasyNextionLibrary.h"
-
 #include <ArduinoJson.h>
 #include <PubSubClient.h>
 #include <myConfig.h>
@@ -11,20 +10,6 @@
 #include <WiFiUdp.h>
 #include "time.h"
 
-// Nextion display constants
-#define ICON1D 1
-#define ICON2D 2
-#define ICON3D 3
-#define ICON4D 4
-#define ICON9D 5
-#define ICON10D 6
-#define ICON11D 7
-#define ICON13D 8
-#define ICON50D 9
-
-#define ICON1N 10
-#define ICON2N 11
-#define ICON10N 12
 
 #define STR_BUFF_SIZE 7
 
