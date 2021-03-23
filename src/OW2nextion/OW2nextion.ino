@@ -147,14 +147,14 @@ void run() {
       const char* city = doc["name"];
  //     nexCity.setText(city);
 
-      char hours[STR_BUFF_SIZE];
-      char mins[STR_BUFF_SIZE];
-      const char* day = daysOfTheWeek[timeClient.getDay()];
-      Serial.println(timeClient.getHours());
-      Serial.println(timeClient.getMinutes());
+      char datetime[100];
+      sprintf(datetime, "%s %02d:%02d %d/%d/%d", daysOfTheWeek[timeClient.getDay()],
+                                             timeClient.getHours(),
+                                             timeClient.getMinutes(),
+                                             1,
+                                             2,
+                                             3);
 
-      sprintf(hours,", %02d", timeClient.getHours());
-      sprintf(mins,":%02d", timeClient.getMinutes());
 
       // weather main
       const char* weather_main = doc["weather"][0]["main"];
@@ -169,12 +169,8 @@ void run() {
      myNex.writeStr("t8.txt", tempInt); 
      myNex.writeStr("t11.txt", tempExt); 
      myNex.writeStr("t10.txt", weather_main); 
+     myNex.writeStr("t9.txt", datetime);
      
-     myNex.writeStr("t9.txt", "DoW");
-     myNex.writeStr("t9.txt+", " hours"); 
-     myNex.writeStr("t9.txt+", " mins");
-     myNex.writeStr("t9.txt+", " dd/mm/yyyy");      
-
       // weather indicator icon 
       const char* icon = doc["weather"][0]["icon"];
 
