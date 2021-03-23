@@ -2,7 +2,7 @@
 
 #include "ESP8266WiFi.h"
 #include <ESP8266HTTPClient.h>
-#include "Nextion.h"
+#include "EasyNextionLibrary.h"
 #include <ArduinoJson.h>
 #include <PubSubClient.h>
 #include <myConfig.h>
@@ -10,50 +10,19 @@
 #include <WiFiUdp.h>
 #include "time.h"
 
-// Nextion display constants
-#define ICON1D 1
-#define ICON2D 2
-#define ICON3D 3
-#define ICON4D 4
-#define ICON9D 5
-#define ICON10D 6
-#define ICON11D 7
-#define ICON13D 8
-#define ICON50D 9
-
-#define ICON1N 10
-#define ICON2N 11
-#define ICON10N 12
 
 #define STR_BUFF_SIZE 7
+
+EasyNex myNex(Serial);
 
 // Web client
 HTTPClient HTTPclient;
 WiFiClient espClient;
 PubSubClient mqttClient(espClient);
 
-
 // OpenWeatherMap Data
 const char* hostOpenWeatherMap = "http://api.openweathermap.org/data/2.5/weather";
 const char* cityID = "2509402"; 
-
-// Nextion Display Fields
-// NexText(PageID, ComponentID, ComponentName)
-NexText nexTemp = NexText(0, 7, "t5");
-NexText nexHumidity = NexText(0, 3, "t1");
-NexText nexWind = NexText(0, 4, "t2");
-NexText nexTempMin = NexText(0, 5, "t3");
-NexText nexTempMax = NexText(0, 6, "t4");
-NexText nexCity = NexText(0, 2, "t0");
-NexCrop nexIcon = NexCrop(0, 13, "q0");
-
-NexText nexTempInt = NexText(0, 11, "t8");
-NexText nexTempExt = NexText(0, 12, "t9");
-//NexText nexNameTempInt = NexText(0, 9, "t6");
-//NexText nexNameTempExt = NexText(0, 13, "t7");
-
-NexText nexDay = NexText(0, 10, "t10");
-NexText nexTime = NexText(0, 14, "t11");
 
 // timer
 unsigned long lastQuery = 0;
@@ -65,12 +34,9 @@ const long utcOffsetInSeconds = 3600;
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, "pool.ntp.org", utcOffsetInSeconds);
 
-
-
 //MQTT
 const char* topicInt = "esp8266_A/bme280/values";
 const char* topicExt = "esp8266_B/bme280/values";
-
 
 char tempExt[STR_BUFF_SIZE];
 char tempInt[STR_BUFF_SIZE];
@@ -161,7 +127,6 @@ void run() {
       char humidity[7];
       snprintf(humidity, STR_BUFF_SIZE, "%d%%", (int)doc["main"]["humidity"]) ;
 
-
       // Temperature min
       float tempMinF = doc["main"]["temp_min"];
       tempMinF = tempMinF - 273.15; // to Celsius
@@ -180,57 +145,63 @@ void run() {
 
       // City
       const char* city = doc["name"];
-      nexCity.setText(city);
+ //     nexCity.setText(city);
 
-      char localt[STR_BUFF_SIZE];
-      const char* day = daysOfTheWeek[timeClient.getDay()];
-      Serial.println(timeClient.getHours());
-      Serial.println(timeClient.getMinutes());
+      char datetime[100];
+      sprintf(datetime, "%s %02d:%02d %d/%d/%d", daysOfTheWeek[timeClient.getDay()],
+                                             timeClient.getHours(),
+                                             timeClient.getMinutes(),
+                                             1,
+                                             2,
+                                             3);
 
-      sprintf(localt,"%d:%d", timeClient.getHours(), timeClient.getMinutes());
+
+      // weather main
+      const char* weather_main = doc["weather"][0]["main"];
 
       // Update display
-      
-      nexTemp.setText(temperature);
-      nexHumidity.setText(humidity);
-      nexTempMin.setText(tempMin);
-      nexTempMax.setText(tempMax);
-      nexWind.setText(wind);
-      nexTempInt.setText(tempInt);
-      nexTempExt.setText(tempExt);
-      nexDay.setText(day);
-      nexTime.setText(localt);
-
+     myNex.writeStr("page page0");
+     myNex.writeStr("t5.txt", temperature); 
+     myNex.writeStr("t1.txt", humidity);  
+     myNex.writeStr("t3.txt", tempMin);
+     myNex.writeStr("t4.txt", tempMax);
+     myNex.writeStr("t2.txt", wind);
+     myNex.writeStr("t8.txt", tempInt); 
+     myNex.writeStr("t11.txt", tempExt); 
+     myNex.writeStr("t10.txt", weather_main); 
+     myNex.writeStr("t9.txt", datetime);
+     
       // weather indicator icon 
       const char* icon = doc["weather"][0]["icon"];
 
+
       // Icon  assingment 
       if (strcmp(icon, "01d") == 0){
-        nexIcon.setPic(ICON1D);
+        myNex.writeNum("q0.picc", 1);
       } else if (strcmp(icon, "01n") == 0) {
-        nexIcon.setPic(ICON1N);
+        myNex.writeNum("q0.picc", 10);
       } else if (strcmp(icon, "02d") == 0) {
-        nexIcon.setPic(ICON2D);
+        myNex.writeNum("q0.picc", 2);
       } else if (strcmp(icon, "02n") == 0) {
-        nexIcon.setPic(ICON2N);
+        myNex.writeNum("q0.picc", 11);
       } else if (strcmp(icon, "03d") == 0 || strcmp(icon, "03n") == 0) {
-        nexIcon.setPic(ICON3D);
+        myNex.writeNum("q0.picc", 3);
       } else if (strcmp(icon, "04d") == 0 || strcmp(icon, "04n") == 0) {
-        nexIcon.setPic(ICON4D);
+        myNex.writeNum("q0.picc", 4);
       } else if (strcmp(icon, "09d") == 0 || strcmp(icon, "09n") == 0) {
-        nexIcon.setPic(ICON9D);
+        myNex.writeNum("q0.picc", 9);
       } else if (strcmp(icon, "10d") == 0) {
-        nexIcon.setPic(ICON10D);
+        myNex.writeNum("q0.picc", 6);
       } else if (strcmp(icon, "10n") == 0) {
-        nexIcon.setPic(ICON10N);    
+        myNex.writeNum("q0.picc", 12);   
       } else if (strcmp(icon, "11d") == 0 || strcmp(icon, "11n") == 0) {
-        nexIcon.setPic(ICON11D);
+        myNex.writeNum("q0.picc", 7);
       } else if (strcmp(icon, "13d") == 0 || strcmp(icon, "13n") == 0) {
-        nexIcon.setPic(ICON13D);
+        myNex.writeNum("q0.picc", 8);
       } else if (strcmp(icon, "50d") == 0 || strcmp(icon, "50n") == 0) {
-        nexIcon.setPic(ICON50D);
+        myNex.writeNum("q0.picc", 9);
       } else {
-        nexIcon.setPic(ICON1D);
+        myNex.writeNum("q0.picc", 1);
       }
 
 #ifdef _DEBUG_
@@ -341,7 +312,8 @@ void reconnect() {
 void setup(){
   // Initiate communication with display
   // 9600 Default Baudrate
-  nexInit(); // From NextHardware.h
+  Serial.begin(9600);
+  myNex.begin(9600); 
   configWifi();
   timeClient.begin();
   mqttClient.setServer(MQTT_HOST_, MQTT_PORT);
@@ -349,6 +321,7 @@ void setup(){
 }
 
 void loop() {
+  myNex.NextionListen();
   timeClient.update();
   timer();
   if (!mqttClient.connected()) {
