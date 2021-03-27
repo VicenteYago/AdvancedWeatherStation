@@ -9,7 +9,7 @@
 #include <NTPClient.h>
 #include <WiFiUdp.h>
 #include "time.h"
-
+#include "TimeLib.h"
 
 #define STR_BUFF_SIZE 7
 
@@ -147,13 +147,14 @@ void run() {
       const char* city = doc["name"];
  //     nexCity.setText(city);
 
+      unsigned long epochTime = timeClient.getEpochTime();
       char datetime[100];
-      sprintf(datetime, "%s %02d:%02d %d/%d/%d", daysOfTheWeek[timeClient.getDay()],
-                                             timeClient.getHours(),
-                                             timeClient.getMinutes(),
-                                             1,
-                                             2,
-                                             3);
+      sprintf(datetime, "%s %02d:%02d %d/%d/%d", daysOfTheWeek[weekday()],
+                                                 hour(),
+                                                 minute(),
+                                                 day(),
+                                                 month(),
+                                                 year());
 
 
       // weather main
@@ -316,7 +317,7 @@ void setup(){
   myNex.begin(9600); 
   configWifi();
   timeClient.begin();
-  mqttClient.setServer(MQTT_HOST_, MQTT_PORT);
+  //mqttClient.setServer(MQTT_HOST_, MQTT_PORT);
   mqttClient.setCallback(callback);
 }
 
