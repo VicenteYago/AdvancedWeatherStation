@@ -1,7 +1,10 @@
 # Intro (In progress)
-Tested on [Nextion Basic Display NX4827T043](https://nextion.tech/datasheets/nx4827t043/)
 
-![nextionDebugg](https://github.com/VicenteYago/OW2Nextion/blob/main/NextionIDE/captions/debuggnextion.PNG)
+![nextionDebugg](https://github.com/VicenteYago/AdvancedWeatherStation/blob/main/architecture.PNG)
+
+
+
+Tested on [Nextion Basic Display NX4827T043](https://nextion.tech/datasheets/nx4827t043/)
 
 # Config
 
