@@ -52,6 +52,6 @@ The following constants are located in `Arduino/libraries/myConfig/myConfig.h` ;
 
 # Raspberry pi set-up
 - https://desertbot.io/blog/headless-raspberry-pi-4-ssh-wifi-setup
-
+- https://sensorsiot.github.io/IOTstack/Getting-Started.html
 
 
