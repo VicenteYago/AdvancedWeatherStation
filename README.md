@@ -48,3 +48,10 @@ The following constants are located in `Arduino/libraries/myConfig/myConfig.h` ;
 
 - For the following Arduino IDE exception `[Errno 13] pemission denied: '/dev/ttyUSB0' does not exist or your board is not connected` run `sudo chmod a+rw /dev/ttyUSB0`
 - Nextion libraries are unmantained and full of bugs, afortunately [Seithan](https://github.com/Seithan/EasyNextionLibrary) provided an excellent one with a very good documentaion. Additionally [Perry Pebbington](https://forum.arduino.cc/index.php?topic=604185.msg4100443#msg4100443) and  [Ray Livingston](https://forum.arduino.cc/index.php?topic=620821.0) also offer solutions to the original nextion libraries.
+
+
+# Raspberry pi set-up
+- https://desertbot.io/blog/headless-raspberry-pi-4-ssh-wifi-setup
+
+
+
