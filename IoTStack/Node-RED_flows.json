@@ -1,0 +1,141 @@
+[
+    {
+        "id": "ef1274c.7330788",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "22a38e99.e602b2",
+        "type": "mqtt-broker",
+        "name": "Hub",
+        "broker": "mosquitto",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "c2d0b55b.b23698",
+        "type": "influxdb",
+        "hostname": "influxdb",
+        "port": "8086",
+        "protocol": "http",
+        "database": "meteo_iot",
+        "name": "influxdb",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "1.x",
+        "url": "http://localhost:8086",
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "9739f524.0d40a8",
+        "type": "mqtt in",
+        "z": "ef1274c.7330788",
+        "name": "",
+        "topic": "esp8266_A/bme280/values",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "22a38e99.e602b2",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "x": 130,
+        "y": 260,
+        "wires": [
+            [
+                "4b7a4f04.76b1f",
+                "ae4056de.80c7f8"
+            ]
+        ]
+    },
+    {
+        "id": "4b7a4f04.76b1f",
+        "type": "debug",
+        "z": "ef1274c.7330788",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 390,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "ae4056de.80c7f8",
+        "type": "function",
+        "z": "ef1274c.7330788",
+        "name": "esp8266_A",
+        "func": "if (msg.payload[\"SAT\"]) saturated=true\nelse saturated=false\n\nconst obj = JSON.parse(msg.payload)\nmsg.payload = [\n{\n    mqtt_topic : obj[\"mqtt_topic\"],\n    timestamp : obj[\"timestamp\"],\n    temperature :  obj[\"data\"][0][\"temperature\"],\n    humidity :  obj[\"data\"][0][\"humidity\"],\n    pressure :  obj[\"data\"][0][\"pressure\"]\n}]\nnode.status({fill:\"green\", shape:\"ring\", text:msg.payload[0].L})\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 220,
+        "wires": [
+            [
+                "ff7b96b7.1695a8",
+                "de13e422.98c178"
+            ]
+        ]
+    },
+    {
+        "id": "ff7b96b7.1695a8",
+        "type": "debug",
+        "z": "ef1274c.7330788",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 610,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "de13e422.98c178",
+        "type": "influxdb out",
+        "z": "ef1274c.7330788",
+        "influxdb": "c2d0b55b.b23698",
+        "name": "influxdb",
+        "measurement": "esp8266_A",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "organisation",
+        "bucket": "bucket",
+        "x": 600,
+        "y": 220,
+        "wires": []
+    }
+]
