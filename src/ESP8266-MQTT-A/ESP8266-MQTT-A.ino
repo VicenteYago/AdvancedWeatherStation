@@ -83,7 +83,7 @@ void onMqttPublish(uint16_t packetId) {
 
 void bmetoJson(char *buffer, int epochtime, float temp, float hum, float pres){
   StaticJsonDocument<170> doc;
-  doc["sensor"] = TOPIC;
+  doc["mqtt_topic"] = TOPIC;
   doc["timestamp"] = epochtime; 
   JsonArray data = doc.createNestedArray("data"); 
   JsonObject data_0 = data.createNestedObject();
