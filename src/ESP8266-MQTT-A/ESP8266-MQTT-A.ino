@@ -126,10 +126,28 @@ void setup() {
     while (1);
   }
 
+  timeClient.update();
+  unsigned long currentMillis = millis();
+  unsigned long epochTime = timeClient.getEpochTime();
+
+  temp = bme.readTemperature();
+  hum  = bme.readHumidity();
+  pres = bme.readPressure()/100.0F;
+  
+  delay(5000);
+  char buffer[170];
+  bmetoJson(buffer,epochTime, temp, hum, pres);
+  uint16_t packetIdPub1 = mqttClient.publish(TOPIC, 1, true, buffer);                
+  Serial.printf("Publishing on topic %s at QoS 1, packetId: %i ", TOPIC, packetIdPub1);
+  Serial.printf("Message: %s \n", buffer);
+  delay(5000);
+  
+  mqttClient.disconnect();
+  ESP.deepSleep(60e6); //1 minutes
 }
 
 void loop() {
-  
+ /* 
   timeClient.update();
   unsigned long currentMillis = millis();
   unsigned long epochTime = timeClient.getEpochTime();
@@ -149,4 +167,5 @@ void loop() {
     Serial.printf("Publishing on topic %s at QoS 1, packetId: %i ", TOPIC, packetIdPub1);
     Serial.printf("Message: %s \n", buffer);
   }
+ */
 }
