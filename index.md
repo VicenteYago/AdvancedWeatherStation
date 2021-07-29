@@ -1,4 +1,6 @@
-## Welcome to GitHub Pages
+## Description
+
+## Config
 
 You can use the [editor on GitHub](https://github.com/VicenteYago/AdvancedWeatherStation/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
