@@ -1,6 +1,6 @@
 # Intro (In progress)
 
-![nextionDebugg](https://github.com/VicenteYago/AdvancedWeatherStation/blob/main/architecture.PNG)
+![nextionDebugg](https://github.com/VicenteYago/AdvancedWeatherStation/blob/main/img/architecture.PNG)
 
 
 
