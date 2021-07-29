@@ -3,10 +3,10 @@ This proyects represents an example of IoT low-cost infraestructure, from sensor
 
 The server is located in a Raspberry Pi 4 B GB RAM model, running a headless Raspbian, for fast and reliable storage of data, the Raspberry had attached a 120 GB SSD.
 
-![nextionDebugg](img/architecture.png)
+![architecture](img/architecture.png)
 
 
-![nextionDebugg](img/meteoIOT.png)
+![visualization](img/meteoIOT.png)
 
 
 
