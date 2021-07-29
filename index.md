@@ -6,7 +6,7 @@ The server is located in a Raspberry Pi 4 B GB RAM model, running a headless Ras
 ![nextionDebugg](img/architecture.png)
 
 
-
+![nextionDebugg](img/meteoIOT.png)
 
 
 
