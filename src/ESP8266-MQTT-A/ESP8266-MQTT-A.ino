@@ -143,7 +143,7 @@ void setup() {
   delay(5000);
   
   mqttClient.disconnect();
-  ESP.deepSleep(60e6); //1 minutes
+  ESP.deepSleep(6e8); //10 minutes
 }
 
 void loop() {
