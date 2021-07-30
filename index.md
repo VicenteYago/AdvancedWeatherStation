@@ -1,26 +1,23 @@
 
-This proyects represents an example of IoT low-cost infraestructure, from sensor deploy to visualization.
-
-The server is located in a Raspberry Pi 4 B GB RAM model, running a headless Raspbian, for fast and reliable storage of data, the Raspberry had attached a 120 GB SSD.
-
-![architecture](img/architecture.png)
 
 
-![visualization](img/meteoIOT.png)
 
 
 
 
 
 ## Description
+This proyects represents an example of IoT low-cost infraestructure, from sensor deploy to visualization.
 
-## Config
+## Server & Stack
+The server is located in a Raspberry Pi 4 B GB RAM model, running a headless Raspbian, for fast and reliable storage of data, the Raspberry had attached a 120 GB SSD.
 
-## Set Up 
+![architecture](img/architecture.png)
+![visualization](img/meteoIOT.png)
 
-## Details 
+## Sensors 
 
-## Future Work
+## Display 
 
 ## Useful links
 * IoTStack : https://sensorsiot.github.io/IOTstack/
