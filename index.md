@@ -24,9 +24,9 @@ The IoT is based on the  Wemos D1 Mini, a mini wifi board with 4MB flash based o
 
 The ESP boards are configured in the "deep-sleep" mode because of two main reasosn:
 
-* To avoid artificial high temperatures readings due to overheating. This is even more important when the housing is so small. In this way every 10 minutes the board connects to wifi and the MQTT server, sends the new measures and finally enters in deep sleep mode.
+* To avoid artificial high temperatures readings due to overheating. This is even more important when the housing is so small. 
 * To minimize the energy consuption, and thus improving the battery life, even lasting for many months.
-
+In this way every 10 minutes the board connects to wifi and the MQTT server, sends the new measures and finally enters in deep sleep mode.
 
 
 ## Bonus: TFT Display 
