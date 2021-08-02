@@ -27,7 +27,7 @@ The ESP boards are configured in the "deep-sleep" mode because of avoiding artif
 
 
 
-## Display 
+## Bonus: TFT Display 
 
 ## Useful links
 * IoTStack : https://sensorsiot.github.io/IOTstack/
