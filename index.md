@@ -5,20 +5,24 @@
 An implementation IoT low-cost infraestructure, from sensor deploy to visualization.
 
 ## Server & Stack
-The server is located in a Raspberry Pi 4B  4GB RAM model, running a headless Raspbian, for fast and reliable storage of data, the Raspberry had attached a 120 GB SSD.
+The server is located in a Raspberry Pi 4B 4GB  model running a headless Raspbian with an 120 GB SSD.
+
 ![architecture](img/architecture.png)
 
 The RPi hosts use the IOTstack service, concretely the following containers: 
 
-* Node-RED: For easy connection between hardware and software platforms.
-* InfluxDB : Storing data.
-* MQTT server : Light weigth IOT protocol. 
-* Grafana : Simple yet customaizable visualization.
+* Node-RED: For easy connection between hardware devices and software platforms.
+* InfluxDB : Time series database.
+* Mosquitto : MQTT server. 
+* Grafana : Analytics and interactive visualization web app.
 
 
 ![visualization](img/meteoIOT.png)
 
 ## Sensors 
+The IoT is based on the  Wemos D1 Mini, a mini wifi board with 4MB flash based on ESP-8266EX. The readings are performed with de BME280, an environmental sensor with temperature, barometric pressure and humidity wich can be used in both SPI and I2C.
+
+
 
 ## Display 
 
