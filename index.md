@@ -2,11 +2,6 @@
 
 # IoT Low Cost Weather Station 
 
-
-
-
-
-## Description
 This proyects represents an example of IoT low-cost infraestructure, from sensor deploy to visualization.
 
 ## Server & Stack
