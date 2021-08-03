@@ -3,7 +3,8 @@
 # IoT Low Cost Weather Station 
 
 An implementation IoT low-cost infraestructure, from sensor deploy to visualization.
-![visualization](img/meteoIOT.png)
+
+![visualization](img/architecture.png)
 
 ## Server & Stack
 The server is located in a Raspberry Pi 4B 4GB  model running a headless Raspbian with an 120 GB SSD.
