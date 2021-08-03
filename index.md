@@ -9,7 +9,7 @@ An implementation IoT low-cost infraestructure, from sensor deploy to visualizat
 ## Server & Stack
 The server is located in a Raspberry Pi 4B 4GB  model running a headless Raspbian with an 120 GB SSD.
 
-![rpi_server](img/rpi_server.png)
+![rpi_server](img/rpi_server.jpg)
 
 The RPi hosts use the IOTstack service, concretely the following containers: 
 
@@ -31,7 +31,7 @@ The ESP boards are configured in the "deep-sleep" mode because of two main reaso
 
 In this way every 10 minutes the board connects to wifi and the MQTT server, sends the new measures and finally enters in deep sleep mode.
 
-![sensor](img/sensor.png)
+![sensor](img/sensor.jpg)
 
 
 ## Bonus: TFT Display 
