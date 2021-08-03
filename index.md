@@ -17,6 +17,7 @@ The RPi hosts use the IOTstack service, concretely the following containers:
 * InfluxDB: Time series database.
 * Mosquitto: MQTT server. 
 * Grafana: Analytics and interactive visualization web app.
+
 ![visualization](img/meteoIOT.png)
 
 
