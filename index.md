@@ -1,27 +1,36 @@
 
-This proyects represents an example of IoT low-cost infraestructure, from sensor deploy to visualization.
 
-The server is located in a Raspberry Pi 4 B GB RAM model, running a headless Raspbian, for fast and reliable storage of data, the Raspberry had attached a 120 GB SSD.
+# IoT Low Cost Weather Station 
 
-![nextionDebugg](https://github.com/VicenteYago/AdvancedWeatherStation/blob/main/architecture.PNG)
+An implementation IoT low-cost infraestructure, from sensor deploy to visualization.
+
+## Server & Stack
+The server is located in a Raspberry Pi 4B 4GB  model running a headless Raspbian with an 120 GB SSD.
+
+![architecture](img/architecture.png)
+
+The RPi hosts use the IOTstack service, concretely the following containers: 
+
+* Node-RED: For easy connection between hardware devices and software platforms.
+* InfluxDB: Time series database.
+* Mosquitto: MQTT server. 
+* Grafana: Analytics and interactive visualization web app.
 
 
+![visualization](img/meteoIOT.png)
+
+## Sensors 
+The IoT is based on the  Wemos D1 Mini, a mini wifi board with 4MB flash based on ESP-8266EX. The readings are performed with de BME280, an environmental sensor with temperature, barometric pressure and humidity wich can be used in both SPI and I2C.
+
+The ESP boards are configured in the "deep-sleep" mode because of two main reasosn:
+
+* To avoid artificial high temperatures readings due to overheating. This is even more important when the housing is so small. 
+* To minimize the energy consuption, and thus improving the battery life, even lasting for many months.
+
+In this way every 10 minutes the board connects to wifi and the MQTT server, sends the new measures and finally enters in deep sleep mode.
 
 
-
-
-
-
-
-## Description
-
-## Config
-
-## Set Up 
-
-## Details 
-
-## Future Work
+## Bonus: TFT Display 
 
 ## Useful links
 * IoTStack : https://sensorsiot.github.io/IOTstack/
