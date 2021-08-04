@@ -11,6 +11,8 @@
 #include "time.h"
 #include "TimeLib.h"
 
+
+#define MQTT_HOST IPAddress(MQTT_HOST_1, MQTT_HOST_2, MQTT_HOST_3, MQTT_HOST_4)
 #define STR_BUFF_SIZE 7
 
 EasyNex myNex(Serial);
@@ -149,12 +151,12 @@ void run() {
 
       unsigned long epochTime = timeClient.getEpochTime();
       char datetime[100];
-      sprintf(datetime, "%s %02d:%02d %d/%d/%d", daysOfTheWeek[weekday()],
-                                                 hour(),
-                                                 minute(),
-                                                 day(),
-                                                 month(),
-                                                 year());
+      sprintf(datetime, "%s %02d:%02d %d/%d/%d", daysOfTheWeek[timeClient.getDay()],
+                                                 hour(epochTime),
+                                                 minute(epochTime),
+                                                 day(epochTime),
+                                                 month(epochTime),
+                                                 year(epochTime));
 
 
       // weather main
@@ -294,7 +296,7 @@ void reconnect() {
   while (!mqttClient.connected()) {
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
-    if (mqttClient.connect("ESP8266Client", MQTT_USER, MQTT_PASS)) {
+    if (mqttClient.connect("NextionClient", MQTT_USER, MQTT_PASS)) {
       Serial.println("Succesfully connected");
       // Subscribe
       mqttClient.subscribe("esp8266_A/bme280/values");
@@ -317,7 +319,7 @@ void setup(){
   myNex.begin(9600); 
   configWifi();
   timeClient.begin();
-  //mqttClient.setServer(MQTT_HOST_, MQTT_PORT);
+  mqttClient.setServer(MQTT_HOST, MQTT_PORT);
   mqttClient.setCallback(callback);
 }
 
