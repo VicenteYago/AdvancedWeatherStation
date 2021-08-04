@@ -6,7 +6,7 @@
 #include <ESP8266WiFi.h>
 #include <Ticker.h>
 #include <AsyncMqttClient.h>
-#include <Adafruit_BME280.h>                                                                               
+#include <Adafruit_BME280.h>
 #include <ArduinoJson.h>
 #include <NTPClient.h>
 #include <WiFiUdp.h>
@@ -17,7 +17,7 @@
 #define SEALEVELPRESSURE_HPA (1013.25)
 
 // MQTT Topics
-#define TOPIC "esp8266_B/bme280/values"
+#define TOPIC "esp8266_A/bme280/values"
 
 // Define NTP Client to get time
 WiFiUDP ntpUDP;
@@ -83,7 +83,7 @@ void onMqttPublish(uint16_t packetId) {
 
 void bmetoJson(char *buffer, int epochtime, float temp, float hum, float pres){
   StaticJsonDocument<170> doc;
-  doc["sensor"] = TOPIC;
+  doc["mqtt_topic"] = TOPIC;
   doc["timestamp"] = epochtime; 
   JsonArray data = doc.createNestedArray("data"); 
   JsonObject data_0 = data.createNestedObject();
@@ -126,10 +126,28 @@ void setup() {
     while (1);
   }
 
+  timeClient.update();
+  unsigned long currentMillis = millis();
+  unsigned long epochTime = timeClient.getEpochTime();
+
+  temp = bme.readTemperature();
+  hum  = bme.readHumidity();
+  pres = bme.readPressure()/100.0F;
+  
+  delay(5000);
+  char buffer[170];
+  bmetoJson(buffer,epochTime, temp, hum, pres);
+  uint16_t packetIdPub1 = mqttClient.publish(TOPIC, 1, true, buffer);                
+  Serial.printf("Publishing on topic %s at QoS 1, packetId: %i ", TOPIC, packetIdPub1);
+  Serial.printf("Message: %s \n", buffer);
+  delay(5000);
+  
+  mqttClient.disconnect();
+  ESP.deepSleep(6e8); //10 minutes
 }
 
 void loop() {
-  
+ /* 
   timeClient.update();
   unsigned long currentMillis = millis();
   unsigned long epochTime = timeClient.getEpochTime();
@@ -149,4 +167,5 @@ void loop() {
     Serial.printf("Publishing on topic %s at QoS 1, packetId: %i ", TOPIC, packetIdPub1);
     Serial.printf("Message: %s \n", buffer);
   }
+ */
 }
