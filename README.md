@@ -21,7 +21,7 @@ In order to use the library update the following lines in `Arduino/libraries/ITE
 ```
 # Credentials
 
-The following constants are located in `Arduino/libraries/myConfig/myConfig.h` ;)
+The following constants are located in `Arduino/libraries/myConfig/myConfig.h`, you must define yours ;).
 
 ```{C}
 #define WIFI_SSID "WIFI_SSID"
