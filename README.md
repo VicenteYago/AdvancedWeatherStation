@@ -1,5 +1,4 @@
-# Intro (In progress)
-
+IoT Weather Station
 ![nextionDebugg](https://github.com/VicenteYago/AdvancedWeatherStation/blob/main/img/architecture.PNG)
 
 
