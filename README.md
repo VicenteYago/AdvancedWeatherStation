@@ -33,8 +33,7 @@ Tested on [Nextion Basic Display NX4827T043](https://nextion.tech/datasheets/nx4
 
 ## Arduino Libraries
 
-* AsynqMqttClient : https://github.com/marvinroger/async-mqtt-client
-* PubSubClient: https://www.arduino.cc/reference/en/libraries/pubsubclient/
+* PubSubClient: https://github.com/knolleary/pubsubclient
 * ArduinoJson : https://github.com/bblanchon/ArduinoJson
 * AdafruitBME280: https://github.com/adafruit/Adafruit_BME280_Library
 * ESPAsyncTCP : https://github.com/me-no-dev/ESPAsyncTCP
