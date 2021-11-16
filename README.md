@@ -4,11 +4,13 @@ Build your own IoT weather station based in ESP8266.
 
 ![nextionDebugg](https://github.com/VicenteYago/AdvancedWeatherStation/blob/main/img/architecture2.PNG)
 
-The proyect its composed by 4 parts: 
-* IOT sensors for indoors & outdoors
-* ESP8266 boards
-* Rpi as a server
-* Nextion display
+The proyect is composed by the following parts: 
+* 3 x Wemos D1 Mini
+* 1 x bme280
+* 1 x dsb18b20
+* 1 x Nextion Display
+* 1 x Raspberry Pi 4 4GB
+* 1 x external SSD
 
 We will sense the following variables :
 
@@ -58,7 +60,7 @@ In order to use the library update the following lines in `Arduino/libraries/ITE
 - https://desertbot.io/blog/headless-raspberry-pi-4-ssh-wifi-setup
 - https://sensorsiot.github.io/IOTstack/Getting-Started.html
 
-# Credentials
+## Credentials
 
 The following constants are located in `Arduino/libraries/myConfig/myConfig.h`, you must define yours ;).
 
