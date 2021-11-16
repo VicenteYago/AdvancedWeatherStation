@@ -33,7 +33,7 @@ The ESP boards are configured in the "deep-sleep" mode because of two main reaso
 In this way every 10 minutes the board connects to wifi and the MQTT server, sends the new measures and finally enters in deep sleep mode.
 
 ![sensor](img/composition.png)
-
+Left: Interior setup with bme280. Right: Exterior setup with waterproof ds18b20.
 
 ## Bonus: TFT Display 
 
