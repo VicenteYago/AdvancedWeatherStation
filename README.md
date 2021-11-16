@@ -2,7 +2,7 @@
 
 Build your own IoT weather station based in ESP8266. 
 
-![nextionDebugg](https://github.com/VicenteYago/AdvancedWeatherStation/blob/main/img/architecture2.PNG)
+![nextionDebugg](https://github.com/VicenteYago/AdvancedWeatherStation/blob/main/img/architecture3.PNG)
 
 The proyect is composed by the following parts: 
 * 3 x Wemos D1 Mini
