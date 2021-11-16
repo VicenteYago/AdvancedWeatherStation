@@ -2,7 +2,7 @@
 
 Build your own IoT weather station based in ESP8266. 
 
-![nextionDebugg](https://github.com/VicenteYago/AdvancedWeatherStation/blob/main/img/architecture.PNG)
+![nextionDebugg](https://github.com/VicenteYago/AdvancedWeatherStation/blob/main/img/architecture2.PNG)
 
 The proyect its composed by 4 parts: 
 * IOT sensors for indoors & outdoors
