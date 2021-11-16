@@ -36,8 +36,8 @@ Tested on [Nextion Basic Display NX4827T043](https://nextion.tech/datasheets/nx4
 * PubSubClient: https://github.com/knolleary/pubsubclient
 * ArduinoJson : https://github.com/bblanchon/ArduinoJson
 * AdafruitBME280: https://github.com/adafruit/Adafruit_BME280_Library
-* ESPAsyncTCP : https://github.com/me-no-dev/ESPAsyncTCP
 * TimeLib : https://github.com/PaulStoffregen/Time
+* DallasTemperature: https://github.com/milesburton/Arduino-Temperature-Control-Library
 
 * Nextion libraries are unmantained and full of bugs, afortunately [Seithan](https://github.com/Seithan/EasyNextionLibrary) provided an excellent one with a very good documentaion. Additionally [Perry Pebbington](https://forum.arduino.cc/index.php?topic=604185.msg4100443#msg4100443) and  [Ray Livingston](https://forum.arduino.cc/index.php?topic=620821.0) also offer solutions to the original nextion libraries. But the Seithan one is the only that fits all my needs.
 
