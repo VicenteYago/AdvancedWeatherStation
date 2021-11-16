@@ -2,13 +2,15 @@
 
 Build your own IoT weather station based in ESP8266. 
 
-![nextionDebugg](https://github.com/VicenteYago/AdvancedWeatherStation/blob/main/img/architecture.PNG)
+![nextionDebugg](https://github.com/VicenteYago/AdvancedWeatherStation/blob/main/img/architecture2.PNG)
 
-The proyect its composed by 4 parts: 
-* IOT sensors for indoors & outdoors
-* ESP8266 boards
-* Rpi as a server
-* Nextion display
+The proyect is composed by the following parts: 
+* 3 x Wemos D1 Mini
+* 1 x bme280
+* 1 x dsb18b20
+* 1 x Nextion Display
+* 1 x Raspberry Pi 4 4GB
+* 1 x external SSD
 
 We will sense the following variables :
 
@@ -33,12 +35,11 @@ Tested on [Nextion Basic Display NX4827T043](https://nextion.tech/datasheets/nx4
 
 ## Arduino Libraries
 
-* AsynqMqttClient : https://github.com/marvinroger/async-mqtt-client
-* PubSubClient: https://www.arduino.cc/reference/en/libraries/pubsubclient/
+* PubSubClient: https://github.com/knolleary/pubsubclient
 * ArduinoJson : https://github.com/bblanchon/ArduinoJson
 * AdafruitBME280: https://github.com/adafruit/Adafruit_BME280_Library
-* ESPAsyncTCP : https://github.com/me-no-dev/ESPAsyncTCP
 * TimeLib : https://github.com/PaulStoffregen/Time
+* DallasTemperature: https://github.com/milesburton/Arduino-Temperature-Control-Library
 
 * Nextion libraries are unmantained and full of bugs, afortunately [Seithan](https://github.com/Seithan/EasyNextionLibrary) provided an excellent one with a very good documentaion. Additionally [Perry Pebbington](https://forum.arduino.cc/index.php?topic=604185.msg4100443#msg4100443) and  [Ray Livingston](https://forum.arduino.cc/index.php?topic=620821.0) also offer solutions to the original nextion libraries. But the Seithan one is the only that fits all my needs.
 
@@ -59,7 +60,7 @@ In order to use the library update the following lines in `Arduino/libraries/ITE
 - https://desertbot.io/blog/headless-raspberry-pi-4-ssh-wifi-setup
 - https://sensorsiot.github.io/IOTstack/Getting-Started.html
 
-# Credentials
+## Credentials
 
 The following constants are located in `Arduino/libraries/myConfig/myConfig.h`, you must define yours ;).
 
