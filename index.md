@@ -39,8 +39,3 @@ Aditonally the data is shown on a Nextion Display (NX4827T043) in which OpenWeat
 
 The filews for the 3D case can be found in /3D folder.
 
-
-## Useful links
-* IoTStack : https://sensorsiot.github.io/IOTstack/
-* Headless RPi & Networking: https://www.raspberrypi.org/documentation/configuration/wireless/headless.md
-
