@@ -46,19 +46,6 @@ The case is 3D printed, the files can be found in the /3D folder.
 
 * Nextion libraries are unmantained and full of bugs, afortunately [Seithan](https://github.com/Seithan/EasyNextionLibrary) provided an excellent one with a very good documentaion. Additionally [Perry Pebbington](https://forum.arduino.cc/index.php?topic=604185.msg4100443#msg4100443) and  [Ray Livingston](https://forum.arduino.cc/index.php?topic=620821.0) also offer solutions to the original nextion libraries. But the Seithan one is the only that fits all my needs.
 
-
-In order to use the library update the following lines in `Arduino/libraries/ITEADLIB_Arduino_Nextion-0.7.0/NexConfig.h`
-
-```{c}
-....
-//#define DEBUG_SERIAL_ENABLE
-...
-//#define dbSerial Serial
-...
-#define nexSerial Serial
-...
-```
-
 ## Raspberry pi set-up
 - https://desertbot.io/blog/headless-raspberry-pi-4-ssh-wifi-setup
 - https://sensorsiot.github.io/IOTstack/Getting-Started.html
@@ -94,4 +81,6 @@ The following constants are located in `Arduino/libraries/myConfig/myConfig.h`, 
 
 
 
-
+# Useful links
+* IoTStack : https://sensorsiot.github.io/IOTstack/
+* Headless RPi & Networking: https://www.raspberrypi.org/documentation/configuration/wireless/headless.md
