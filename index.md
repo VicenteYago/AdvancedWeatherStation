@@ -9,7 +9,7 @@ An implementation IoT low-cost infraestructure, from sensor deploy to visualizat
 ## Server & Stack
 The server is located in a Raspberry Pi 4B 4GB  model running a headless Raspbian with an 120 GB SSD.
 
-![rpi_server](img/rpi_server2.jpg)
+![rpi_server](img/rpi_server2.png)
 
 The RPi hosts use the IOTstack service, concretely the following containers: 
 
