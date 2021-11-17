@@ -35,7 +35,7 @@ In this way every 10 minutes the board connects to wifi and the MQTT server, sen
 Left: Interior setup with bme280. Right: Exterior setup with waterproof ds18b20.
 
 Aditonally the data is shown on a Nextion Display (NX4827T043) in which OpenWeather meteorological local data such as wind speed, min-max temperatures and weather type is also included.
-![visualization](img/nextion.png)
+![visualization](img/nextion2.png)
 
 The filews for the 3D case can be found in /3D folder.
 
