@@ -8,10 +8,9 @@ An implementation IoT low-cost infraestructure, from sensor deploy to visualizat
 
 ## Server & Stack
 The server is located in a Raspberry Pi 4B 4GB  model running a headless Raspbian with an 120 GB SSD.
-! [rpi_server](img/rpi_server2.png)
-<p align="center">
-  <img width="460" height="300" src="img/rpi_server2.png">
-</p>
+
+![rpi_server](img/rpi_server2.png)
+
 The RPi hosts use the IOTstack service, concretely the following containers: 
 
 * Node-RED: For easy connection between hardware devices and software platforms.
@@ -35,9 +34,11 @@ In this way every 10 minutes the board connects to wifi and the MQTT server, sen
 ![sensor](img/composition.png)
 Left: Interior setup with bme280. Right: Exterior setup with waterproof ds18b20.
 
-Aditonally the data is displayed on a Nextion Display (Tested on Nextion Basic Display NX4827T043 ) in which OpenWeather meteorological local data such as wind speed, min-max temperatures and weather type is also included.
+Aditonally the data is displayed on a Nextion Display (NX4827T043) in which OpenWeather meteorological local data such as wind speed, min-max temperatures and weather type is also included.
 
 ![visualization](img/nextion.png)
+The case is 3D printed, the files can be found in /3D folder.
+
 
 ## Useful links
 * IoTStack : https://sensorsiot.github.io/IOTstack/
