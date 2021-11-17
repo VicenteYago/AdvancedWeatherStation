@@ -38,7 +38,7 @@ NTPClient timeClient(ntpUDP, "pool.ntp.org", utcOffsetInSeconds);
 
 //MQTT
 const char* topicInt = "esp8266_A/bme280/values";
-const char* topicExt = "esp8266_B/bme280/values";
+const char* topicExt = "esp8266_B/ds18b20/values";
 
 char tempExt[STR_BUFF_SIZE];
 char tempInt[STR_BUFF_SIZE];
@@ -87,7 +87,7 @@ void run() {
   int HTTPcode = HTTPclient.GET();
 
 #ifdef _DEBUG_
-  Serial.print("HTTP token: ");
+  Serial.print("HTTP code: ");
   Serial.println(HTTPcode);
 #endif
 
@@ -290,17 +290,16 @@ void callback(char* topic, byte* payload, unsigned int length) {
   
 }
 
-
 void reconnect() {
    // Loop until we're reconnected
   while (!mqttClient.connected()) {
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
     if (mqttClient.connect("NextionClient", MQTT_USER, MQTT_PASS)) {
-      Serial.println("Succesfully connected");
+      Serial.println("Succesfully connected to MQTT Broker");
       // Subscribe
-      mqttClient.subscribe("esp8266_A/bme280/values");
-      mqttClient.subscribe("esp8266_B/bme280/values");
+      mqttClient.subscribe(topicInt);
+      mqttClient.subscribe(topicExt);
 
     } else {
       Serial.print("failed, rc=");
