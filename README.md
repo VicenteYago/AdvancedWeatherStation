@@ -30,7 +30,7 @@ Aditonally the data is displayed on a Nextion Display (Tested on [Nextion Basic 
 ) in which OpenWeather meteorological data such as wind speed, min-max temperatures and weather type is also included. 
 
 
-![nextionDebugg](https://github.com/VicenteYago/AdvancedWeatherStation/blob/main/img/architecture3.PNG)
+![nextionDebugg](https://github.com/VicenteYago/AdvancedWeatherStation/blob/main/img/composition.png)
 
 
 # Config
