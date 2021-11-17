@@ -32,6 +32,7 @@ Aditonally the data is displayed on a Nextion Display (Tested on [Nextion Basic 
 
 ![nextionDebugg](https://github.com/VicenteYago/AdvancedWeatherStation/blob/main/img/nextion.png)
 
+The case is 3D printed, the files can be found in the /3D folder.
 
 # Config
 
