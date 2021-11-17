@@ -1,6 +1,6 @@
 # IoT Weather Station
 
-Build your own IoT weather station based in ESP8266. 
+IoT weather station based in ESP8266. 
 
 ![nextionDebugg](https://github.com/VicenteYago/AdvancedWeatherStation/blob/main/img/architecture3.PNG)
 
@@ -26,10 +26,12 @@ The data will be managed by IOTStack (https://github.com/SensorsIot/IOTstack)
  * Mosquitto: MQTT server
  * Grafana : Analytics and interactive visualization web app
 
+Aditonally the data is displayed on a Nextion Display (Tested on [Nextion Basic Display NX4827T043](https://nextion.tech/datasheets/nx4827t043/)
+) in which OpenWeather meteorological data such as wind speed, min-max temperatures and weather type is also included. 
 
 
+![nextionDebugg](https://github.com/VicenteYago/AdvancedWeatherStation/blob/main/img/architecture3.PNG)
 
-Tested on [Nextion Basic Display NX4827T043](https://nextion.tech/datasheets/nx4827t043/)
 
 # Config
 
