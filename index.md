@@ -37,6 +37,7 @@ Left: Interior setup with bme280. Right: Exterior setup with waterproof ds18b20.
 Aditonally the data is displayed on a Nextion Display (NX4827T043) in which OpenWeather meteorological local data such as wind speed, min-max temperatures and weather type is also included.
 
 ![visualization](img/nextion.png)
+
 The case is 3D printed, the files can be found in /3D folder.
 
 
