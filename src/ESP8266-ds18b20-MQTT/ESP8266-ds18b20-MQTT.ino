@@ -115,7 +115,7 @@ void setup() {
   else {
     Serial.println("Publish failed");
   }
-  ESP.deepSleep(60*1000); //10 minutes
+  ESP.deepSleep(6e8); //10 minutes
 }
 
 void loop(){
