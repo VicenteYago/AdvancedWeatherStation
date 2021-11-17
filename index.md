@@ -36,6 +36,7 @@ In this way every 10 minutes the board connects to wifi and the MQTT server, sen
 Left: Interior setup with bme280. Right: Exterior setup with waterproof ds18b20.
 
 ## Bonus: TFT Display 
+![visualization](img/nextion.png)
 
 ## Useful links
 * IoTStack : https://sensorsiot.github.io/IOTstack/
