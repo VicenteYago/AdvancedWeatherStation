@@ -18,7 +18,7 @@ The RPi hosts the IOTstack service, concretely the following containers:
 * Mosquitto: MQTT server. 
 * Grafana: Analytics and interactive visualization web app.
 
-![visualization](img/meteoIOT.png)
+![visualization](img/grafana.png)
 
 
 ## Hardware 
