@@ -1,6 +1,6 @@
 
 
-# IoT Low Cost Weather Station 
+# IoT Weather Station 
 
 An implementation IoT low-cost infraestructure, from sensor deploy to visualization.
 
